@@ -41,7 +41,7 @@
 ### Code를 작성하는 방식? 순서?
 
 1. Contoroller 메서드 정의 (get, post, patch, delete 등)
-2. 애너테이션 정의
+2. ~~애너테이션~~ 데코레이터 정의
 3. Route 정의
-   - 각 메서드 애너테이션 인자로 route 작성 가능
-   - 공통된 route는 Controller 애너테이션 인자에 선언, 그 외의 route는 각 메서드 애너테이션에 선언
+   - 각 메서드 ~~애너테이션~~ 데코레이터 인자로 route 작성 가능
+   - 공통된 route는 Controller ~~애너테이션~~ 데코레이터 인자에 선언, 그 외의 route는 각 메서드 ~~애너테이션~~ 데코레이터에 선언

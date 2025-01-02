@@ -28,15 +28,20 @@
 
 ## 25-01-02
 
-1. Nest Life Cycle
-  Request -> Middleware -> Guard -> Interceptor -> Pipe -> **Module**(요청 로직 처리 부분, Controller, Service, Repository) -> Exception Filter -> Interceptor -> Response
-2. Module
-  - Controller (요청이 가장 먼저 들어옴, 비슷한 api들을 하나로 묶어주는 역할)
-  - Service (business logic 수행, Controller가 실행)
-  - Repository (데이터 저장 수행)
-3. Code를 작성하는 방식? 순서?
-  1. Contoroller 메서드 정의 (get, post, patch, delete 등)
-  2. 애너테이션 정의
-  3. Route 정의
-    - 각 메서드 애너테이션 인자로 route 작성 가능
-    - 공통된 route는 Controller 애너테이션 인자에 선언, 그 외의 route는 각 메서드 애너테이션에 선언
+### Nest Life Cycle
+
+- Request -> Middleware -> Guard -> Interceptor -> Pipe -> **Module**(요청 로직 처리 부분, Controller, Service, Repository) -> Exception Filter -> Interceptor -> Response
+
+### Module
+
+- Controller (요청이 가장 먼저 들어옴, 비슷한 api들을 하나로 묶어주는 역할)
+- Service (business logic 수행, Controller가 실행)
+- Repository (데이터 저장 수행)
+
+### Code를 작성하는 방식? 순서?
+
+1. Contoroller 메서드 정의 (get, post, patch, delete 등)
+2. 애너테이션 정의
+3. Route 정의
+   - 각 메서드 애너테이션 인자로 route 작성 가능
+   - 공통된 route는 Controller 애너테이션 인자에 선언, 그 외의 route는 각 메서드 애너테이션에 선언

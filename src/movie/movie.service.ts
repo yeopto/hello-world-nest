@@ -1,43 +1,38 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  NotFoundException,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
-import { AppService } from './app.service';
+import { CreateMovieDto } from './dto/create-movie.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { UpdateMovieDto } from './dto/update-movie.dto';
 
-interface Movie {
+export interface Movie {
   id: number;
   title: string;
+  genre: string;
 }
 
-@Controller('movie')
-export class AppController {
+@Injectable()
+export class MovieService {
   private movies: Movie[] = [
     {
       id: 1,
       title: '해리포터',
+      genre: 'fantasy',
     },
     {
       id: 2,
       title: '반지의 제왕',
+      genre: 'action',
     },
   ];
   private idCounter = 3;
 
-  constructor(private readonly appService: AppService) {}
+  getManyMovies(title?: string) {
+    if (!title) {
+      return this.movies;
+    }
 
-  @Get()
-  getMovies() {
-    return this.movies;
+    return this.movies.filter((m) => m.title.startsWith(title));
   }
 
-  @Get(':id')
-  getMovie(@Param('id') id: string) {
+  getMovieById(id: number) {
     const movie = this.movies.find((m) => m.id === +id);
 
     if (!movie) {
@@ -47,11 +42,10 @@ export class AppController {
     return movie;
   }
 
-  @Post()
-  postMovie(@Body('title') title: string) {
+  createMovie(createMovieDto: CreateMovieDto) {
     const movie: Movie = {
       id: this.idCounter++,
-      title: title,
+      ...createMovieDto,
     };
 
     this.movies.push(movie);
@@ -59,21 +53,21 @@ export class AppController {
     return movie;
   }
 
-  @Patch(':id')
-  patchMovie(@Body('title') title: string, @Param('id') id: string) {
+  updateMovie(id: number, updateMovieDto: UpdateMovieDto) {
     const movie = this.movies.find((m) => m.id === +id);
 
     if (!movie) {
       throw new NotFoundException('존재하지 않는 ID의 값의 영화입니다.');
     }
 
-    Object.assign('movie', { title });
+    Object.assign(movie, {
+      ...updateMovieDto,
+    });
 
     return movie;
   }
 
-  @Delete(':id')
-  deleteMovie(@Param('id') id: string) {
+  deleteMovie(id: number) {
     const movieIndex = this.movies.findIndex((m) => m.id === +id);
 
     if (movieIndex === -1) {
@@ -81,7 +75,5 @@ export class AppController {
     }
 
     this.movies.splice(movieIndex, 1);
-
-    return id;
   }
 }
